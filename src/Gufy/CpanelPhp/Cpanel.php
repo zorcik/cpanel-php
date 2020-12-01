@@ -336,7 +336,7 @@ class Cpanel implements CpanelInterface
      *
      * @since v1.0.0
      */
-    protected function runQuery($action, $arguments = [], $throw = false)
+    public function runQuery($action, $arguments = [], $throw = false)
     {
         $host = $this->getHost();
         $client = new Client(['base_uri' => $host]);
@@ -350,7 +350,14 @@ class Cpanel implements CpanelInterface
           ]);
 
             if (($decodedBody = json_decode($response->getBody(), true)) === false) {
-                throw new \Exception(json_last_error_msg(), json_last_error());
+                if ($throw)
+                {
+                    throw new \Exception(json_last_error_msg(), json_last_error());
+                }
+                else
+                {
+                    return json_last_error_msg();
+                }
             }
 
             return $decodedBody;
