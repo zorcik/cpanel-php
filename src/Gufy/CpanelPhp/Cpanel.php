@@ -339,7 +339,7 @@ class Cpanel implements CpanelInterface
     public function runQuery($action, $arguments = [], $throw = false)
     {
         $host = $this->getHost();
-        $client = new Client(['base_uri' => $host]);
+        $client = new Client(['base_uri' => 'https://'.$host.':2087']);
         try{
           $response = $client->post('/json-api/' . $action, [
               'headers' => $this->createHeader(),
